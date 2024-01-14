@@ -6,6 +6,7 @@
 #include "EnhancedInputComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include  "Components/WidgetComponent.h"
 #include "EnhancedInputComponent.h"
 // Sets default values
 APlayerPawn::APlayerPawn()
@@ -14,14 +15,17 @@ APlayerPawn::APlayerPawn()
 	PrimaryActorTick.bCanEverTick = true;
 	myBoxComp = CreateDefaultSubobject<UBoxComponent>(TEXT("MyBoxComponent"));
 	SetRootComponent(myBoxComp);
-	myMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshCompo"));
-	myMeshComp->SetupAttachment(myBoxComp);
+	cannonComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshCompo"));
+	cannonComp->SetupAttachment(myBoxComp);
+	crossHairWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("WidgetCompo"));
+	crossHairWidget->SetupAttachment(myBoxComp);
 }
 
 // Called when the game starts or when spawned
 void APlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
@@ -55,10 +59,10 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 void APlayerPawn::Move(const FInputActionValue& Value)
 {
 	const FVector currentValue = Value.Get<FVector>();
-	const double curX = currentValue.X* cannonOffest_x;
-	const double curY = currentValue.Y* cannonOffest_y;
+	const double curX = currentValue.X;
+	const double curY = currentValue.Y;
 	FRotator rot =FRotator(curY,curX,0);
-	
+	FVector widgetDir = FVector(0.f,curX,curY);
 	if (Controller)
 	{
 		UE_LOG(LogTemp, Log, TEXT("input Vector :: %s"), *currentValue.ToString());
@@ -66,8 +70,13 @@ void APlayerPawn::Move(const FInputActionValue& Value)
 		//대포는 입력값을 회전에만 받기 => 회전을 연속적으로 받게하기
 		//나자신을 대포로 생각하기
 		//CurrentValue 값도 제한을 해야함
-		
-		SetActorRotation(rot);
+		cannonComp->AddRelativeRotation(rot);
+		crossHairWidget->AddRelativeLocation(widgetDir);
+		//AddControllerYawInput(curX);
+		//AddControllerPitchInput(curY);
+		//AddActorWorldRotation(rot);
+		//AddActorLocalRotation(rot);
+		//SetActorRotation(rot);
 		//cannon->SetActorLocation(GetActorLocation() + currentValue * crossHairOffest * GetWorld()->GetDeltaSeconds(), true);
 		//crossHair->SetActorLocation(GetActorLocation() + currentValue * cannonOffest * GetWorld()->GetDeltaSeconds(), true);
 	}

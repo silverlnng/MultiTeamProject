@@ -40,14 +40,16 @@ public:
 	class UBoxComponent* myBoxComp; 
 
 	UPROPERTY(EditAnywhere,Category = "Mysetting")
-	class UStaticMeshComponent* myMeshComp;
+	class UStaticMeshComponent* cannonComp;
 
-	UPROPERTY(EditAnywhere, Category = "Mysetting")
-	AActor* crossHair;
-	UPROPERTY(EditAnywhere, Category = "Mysetting")
-	AActor* cannon;
+	UPROPERTY(EditAnywhere,Category = "Mysetting")
+	class UWidgetComponent* crossHairWidget;
+	
+	
 	UPROPERTY(EditAnywhere, Category = "Mysetting")
     float crossHairOffest;
+	UPROPERTY(EditAnywhere, Category = "Mysetting")
+	class UStaticMeshComponent* cannon;
 	UPROPERTY(EditAnywhere, Category = "Mysetting")
 	float cannonOffest_x;
 	UPROPERTY(EditAnywhere, Category = "Mysetting")
