@@ -40,22 +40,36 @@ public:
 	class UBoxComponent* myBoxComp; 
 
 	UPROPERTY(EditAnywhere,Category = "Mysetting")
+	class USceneComponent* cannonPivot;
+	
+	UPROPERTY(EditAnywhere,Category = "Mysetting")
 	class UStaticMeshComponent* cannonComp;
 
+	UPROPERTY(EditAnywhere,Category = "Mysetting")
+	class UArrowComponent* ArrowComp;
+	
 	UPROPERTY(EditAnywhere,Category = "Mysetting")
 	class UWidgetComponent* crossHairWidget;
 	
 	
 	UPROPERTY(EditAnywhere, Category = "Mysetting")
-    float crossHairOffest;
+    float crossHairOffest = 1.2f;
 	UPROPERTY(EditAnywhere, Category = "Mysetting")
 	class UStaticMeshComponent* cannon;
 	UPROPERTY(EditAnywhere, Category = "Mysetting")
-	float cannonOffest_x;
+	float cannonOffest_x =0.7f;
 	UPROPERTY(EditAnywhere, Category = "Mysetting")
-	float cannonOffest_y;
+	float cannonOffest_y = 0.6f;
+
+
+	UPROPERTY(EditAnywhere, Category = "Grenade")
+	TSubclassOf<class ABullect> bullectFactory;
+	UPROPERTY(EditAnywhere, Category = "Grenade")
+	ABullect* bullect;
+	
 private:
+	
 	void Move(const FInputActionValue& Value);
 	void InputFire(const FInputActionValue& Value);
-	
+	void spawnBullect();
 };
