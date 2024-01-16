@@ -52,7 +52,14 @@ void APlayerPawn::BeginPlay()
 void APlayerPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	UE_LOG(LogTemp,Warning,TEXT("%d") , cannonPivot->GetRelativeRotation().Yaw);
 
+	/*auto Rotation = cannonPivot->GetComponentRotation();
+	Rotation.Pitch = FMath::Clamp(Rotation.Pitch, -20, 20);
+	cannonPivot->SetRelativeRotation(Rotation);*/
+	
+	//FMath::Clamp(cannonPivot->GetRelativeRotation().Yaw,-20,20);
 }
 
 // Called to bind functionality to input
@@ -74,8 +81,8 @@ void APlayerPawn::Move(const FInputActionValue& Value)
 	const double curX = currentValue.X;
 	const double curY = currentValue.Y;
 
-	double cannon_Value_X=FMath::Clamp(curX,-20.f,20.f);
-	double cannon_Value_Y=FMath::Clamp(curY,5.f,0.f);
+	//double cannon_Value_X=FMath::Clamp(curX,-20.f,20.f);
+	//double cannon_Value_Y=FMath::Clamp(curY,5.f,0.f);
 	
 	FRotator cannonRot =FRotator(curY*cannonOffest_y,curX*cannonOffest_x,0);
 	
@@ -90,7 +97,14 @@ void APlayerPawn::Move(const FInputActionValue& Value)
 		// (3)크로스 헤어는 Z,Y 축만 이동 받기
 		// (4) 대포의 회전값 은 Value 보다 적게 그리고 제한을 해주기
 		// (5) 크로스헤어의 이동은 Value 보다 많게 조절하기 그리고 제한을 주기
-		
+		/*if(cannonPivot->GetRelativeRotation().Pitch <=5.f && cannonPivot->GetRelativeRotation().Pitch >=0.f)
+		{
+			cannonPivot->AddRelativeRotation(cannonRot);
+		}
+		if(cannonPivot->GetRelativeRotation().Pitch >5.f && curY<0.f)
+		{
+		 cannonPivot->AddRelativeRotation(cannonRot);
+		}*/
 		cannonPivot->AddRelativeRotation(cannonRot);
 		crossHairWidget->AddRelativeLocation(widgetDir);
 		
