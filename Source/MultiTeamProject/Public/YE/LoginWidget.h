@@ -54,8 +54,8 @@ public:
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = "MySettings")
 	class UButton* btn_findSessions;
 
-	/*UPROPERTY(EditAnywhere, Category = "MySettings")
-	TSubclassOf<class USessionSlotWidget> slotWidget;*/
+	UPROPERTY(EditAnywhere, Category = "MySettings")
+	TSubclassOf<class USessionslotUserWidget> slotWidget;
 
 	UPROPERTY(BlueprintReadOnly)
 	class UNetworkGameInstance* gi;
@@ -87,4 +87,7 @@ private:
 
 	UFUNCTION()
 	void FindButtonOnOff(bool on);
+
+	UFUNCTION()
+	void SetUserNameAndNext();
 };
