@@ -8,6 +8,8 @@
 #include "Components/Slider.h"
 #include "NetworkGameInstance.h"
 #include "Components/WidgetSwitcher.h"
+#include "YE/SessionslotUserWidget.h"
+#include "Components/ScrollBox.h"
 
 void ULoginWidget::NativeConstruct()
 {
@@ -85,23 +87,31 @@ void ULoginWidget::OnClickedFindSessionsButton()
 void ULoginWidget::OnSlotCreated(FString roomName, FString hostName, int32 currentPlayers, int32 maxPlayers, int32 ping, int32 sessionIdx)
 {
 	// 서버로부터 받은 정보로 슬롯 위젯을 만들어서 추가한다.
-	/*if (slotWidget != nullptr)
+	if (slotWidget != nullptr)
 	{
-		if (USessionSlotWidget* slot_UI = CreateWidget<USessionSlotWidget>(GetWorld(), slotWidget))
+		if (USessionslotUserWidget* slot_UI = CreateWidget<USessionslotUserWidget>(GetWorld(), slotWidget))
 		{
 			slot_UI->SetSessionInfo(roomName, hostName, currentPlayers, maxPlayers, ping, sessionIdx);
 			sb_roomList->AddChild(slot_UI);
 		}
-	}*/
+	}
 }
 
 void ULoginWidget::OnClearScrollBox()
 {
 	// 기존 슬롯 위젯을 모두 지운다
-	/*sb_roomList->ClearChildren();*/
+	sb_roomList->ClearChildren();
 }
 
 void ULoginWidget::FindButtonOnOff(bool on)
 {
 	btn_findSessions->SetIsEnabled(on);
+}
+
+void ULoginWidget::SetUserNameAndNext()
+{
+	// 게임 인스턴스에 입력한 이름을 저장한다.
+	//gi->SetSessionName(editText_userName->GetText().ToString());
+
+	ws_widgetSwitcher->SetActiveWidgetIndex(1);
 }
