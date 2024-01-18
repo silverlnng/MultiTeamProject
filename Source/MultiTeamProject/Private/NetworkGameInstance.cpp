@@ -74,7 +74,8 @@ void UNetworkGameInstance::OnCreatedSession(FName sessionName, bool bWasSuccessf
     UE_LOG(LogTemp, Warning, TEXT("Session Create: %s"), bWasSuccessful ? *FString("Success!") : *FString("Failed..."));
 
     // 멀티 플레이를 할 맵으로 이동한다.
-    GetWorld()->ServerTravel("/Game/Maps/BattleMap?Listen", true);
+    ///Script/Engine.World'/Game/Maps/YJ/YJ_LobbyMap.YJ_LobbyMap'
+    GetWorld()->ServerTravel("/Game/Maps/YJ/YJ_LobbyMap?Listen", true);
 }
 
 void UNetworkGameInstance::OnFoundSessions(bool bWasSuccessful)
