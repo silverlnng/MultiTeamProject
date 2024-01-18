@@ -5,6 +5,7 @@
 #include "OnlineSubsystem.h"
 #include "OnlineSessionSettings.h"
 #include "Online/OnlineSessionNames.h"
+#include "Blueprint/UserWidget.h"
 
 void UNetworkGameInstance::Init()
 {
