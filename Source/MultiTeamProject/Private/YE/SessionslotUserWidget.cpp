@@ -8,6 +8,9 @@
 
 void USessionslotUserWidget::NativeConstruct()
 {
+	Super::NativeConstruct();
+	btn_join->OnClicked.AddDynamic(this,&USessionslotUserWidget::OnClickedJoinButton);
+	gi = GetGameInstance<UNetworkGameInstance>();
 }
 
 void USessionslotUserWidget::SetSessionInfo(const FString roomName, const FString hostName, const int32 curPlayer, const int32 maxPlayer, const int32 pingSpeed, const int32 idx)
