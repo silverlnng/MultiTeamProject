@@ -20,6 +20,7 @@ void UNetworkGameInstance::Init()
             &UNetworkGameInstance::OnCreatedSession);
         sessionInterface->OnFindSessionsCompleteDelegates.AddUObject(this,
             &UNetworkGameInstance::OnFoundSessions);
+        sessionInterface->OnJoinSessionCompleteDelegates.AddUObject(this,&UNetworkGameInstance::OnJoinedSession);
     }
 
     //내 세션을 서버에 생성 요청한다.
@@ -74,7 +75,8 @@ void UNetworkGameInstance::OnCreatedSession(FName sessionName, bool bWasSuccessf
     UE_LOG(LogTemp, Warning, TEXT("Session Create: %s"), bWasSuccessful ? *FString("Success!") : *FString("Failed..."));
 
     // 멀티 플레이를 할 맵으로 이동한다.
-    GetWorld()->ServerTravel("/Game/Maps/BattleMap?Listen", true);
+    ///Script/Engine.World'/Game/Maps/YJ/YJ_LobbyMap.YJ_LobbyMap'
+    GetWorld()->ServerTravel("/Game/Maps/LobbyMap2?Listen", true);
 }
 
 void UNetworkGameInstance::OnFoundSessions(bool bWasSuccessful)
@@ -128,8 +130,11 @@ void UNetworkGameInstance::OnJoinedSession(FName sessionName, EOnJoinSessionComp
         FString url;
         sessionInterface->GetResolvedConnectString(sessionName, url, NAME_GamePort);
         UE_LOG(LogTemp, Warning, TEXT("url: %s"), *url);
-
-        pc->ClientTravel(url, ETravelType::TRAVEL_Absolute);
+            
+        if(pc!=nullptr)
+        {
+            pc->ClientTravel(url, ETravelType::TRAVEL_Absolute);
+        }
 
         break;
     }

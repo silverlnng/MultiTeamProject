@@ -53,7 +53,7 @@ void APlayerPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	UE_LOG(LogTemp,Warning,TEXT("%d") , cannonPivot->GetRelativeRotation().Yaw);
+	//UE_LOG(LogTemp,Warning,TEXT("%d") , cannonPivot->GetRelativeRotation().Yaw);
 
 	/*auto Rotation = cannonPivot->GetComponentRotation();
 	Rotation.Pitch = FMath::Clamp(Rotation.Pitch, -20, 20);
@@ -90,7 +90,7 @@ void APlayerPawn::Move(const FInputActionValue& Value)
 	
 	if (Controller)
 	{
-		UE_LOG(LogTemp, Log, TEXT("input Vector :: %s"), *currentValue.ToString());
+		//UE_LOG(LogTemp, Log, TEXT("input Vector :: %s"), *currentValue.ToString());
 		
 		// (1) 키보드의 입력값을 대포 , 크로스헤어 둘다 받기
 		// (2)대포는 입력값을 회전에만 받기 => 회전을 연속적으로 받게하기
